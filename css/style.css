@@ -44,6 +44,13 @@ body {
 .cart-main {
   padding-right: 30px;
 }
+footer{
+  text-align: center;
+  margin-top: 70px;
+  background-color: black;
+  color: whitesmoke;
+  padding: 15px;
+}
 @media only screen and (max-width: 768px) {
   #all-products {
     display: grid;

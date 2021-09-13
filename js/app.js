@@ -1,3 +1,4 @@
+// load each product on html
 const loadProducts = () => {
   const url = `https://fakestoreapi.com/products`;
   fetch(url)
@@ -17,16 +18,15 @@ const showProducts = (products) => {
       <div>
         <img class="product-image" src=${product.image}></img>
       </div>
-      <h3>${product.title}</h3>
+      <h3 class="fw-bold">${product.title}</h3>
       <p>Category: ${product.category}</p>
       <div class="d-flex justify-content-around">
-      <p title="user count"><i class="fas fa-users"></i> ${product.rating.count}</p>
-      <p title="avrrage rating"><i class="fas fa-star text-warning"></i> ${product.rating.rate}</p>
+        <p title="average rating"><i class="fas fa-star text-warning"></i> ${product.rating.rate}</p>
+        <p title="user count"><i class="fas fa-users"></i> ${product.rating.count}</p>
       </div>
       <h2>Price: $ ${product.price}</h2>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success"><i class="fas fa-shopping-cart"></i> Add to cart</button>
-
-      <button onclick="singleProductDetails(${product.id})" class="btn btn-info"><i class="fas fa-info-circle"></i> Details</button>
+      <a onclick="singleProductDetails(${product.id})" id="details-btn" class="btn btn-danger" href="#top"><i class="fas fa-info-circle"></i> Details</a>  
     </div>
     `;
     document.getElementById("all-products").appendChild(div);
@@ -42,12 +42,17 @@ const singleProductDetails = (id) => {
       const div = document.createElement('div');
       document.getElementById('single-product-details').textContent = '';
       div.innerHTML = `
-      <div class="card mx-auto w-50">
+      <div class="card mx-auto w-50 border border-3 rounded-2 shadow p-3 mb-5 bg-body rounded">
         <h3 class="card-title text-center">${single.title}</h3>
         <img src="${single.image}" class="card-img-top img-fluid" alt="...">
         <div class="card-body">
           <p class="text-center">Categories: ${single.category}</p>
           <p class="card-text">${single.description}</p>
+          <div class="d-flex justify-content-between">
+            <p><i class="fas fa-star text-warning"></i>Rating: ${single.rating.rate}</p>
+            <p title="user count"><i class="fas fa-users"></i>User Count: ${single.rating.count}</p>
+          </div>
+          <h2>Price: $ ${single.price}</h2>
           <hr>
           <div class="d-flex justify-content-end">
             <button onclick="addToCart(${single.id},${single.price})" id="addToCart-btn" class="buy-now btn btn-success"><i class="fas fa-shopping-cart"></i> Add to cart</button>
@@ -57,7 +62,6 @@ const singleProductDetails = (id) => {
       `
       document.getElementById('single-product-details').appendChild(div);
     });
-
 }
 
 let count = 0;
