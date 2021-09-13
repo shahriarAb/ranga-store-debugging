@@ -12,19 +12,49 @@ const showProducts = (products) => {
   for (const product of allProducts) {
     const div = document.createElement("div");
     div.classList.add("product");
-    div.innerHTML = `<div class="single-product">
+    div.innerHTML = `
+    <div class="single-product">
       <div>
-    <img class="product-image" src=${product.image}></img>
+        <img class="product-image" src=${product.image}></img>
       </div>
       <h3>${product.title}</h3>
       <p>Category: ${product.category}</p>
       <h2>Price: $ ${product.price}</h2>
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" class="btn btn-danger">Details</button></div>
-      `;
+      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success"><i class="fas fa-shopping-cart"></i> Add to cart</button>
+
+      <button onclick="singleProductDetails(${product.id})" class="btn btn-info"><i class="fas fa-info-circle"></i> Details</button>
+    </div>
+    `;
     document.getElementById("all-products").appendChild(div);
   }
 };
+
+// single product details
+const singleProductDetails = (id) => {
+  const url = `https://fakestoreapi.com/products/${id}`;
+  fetch(url)
+    .then(res => res.json())
+    .then(single => {
+      const div = document.createElement('div');
+      document.getElementById('single-product-details').textContent = '';
+      div.innerHTML = `
+      <div class="card mx-auto w-50">
+        <h3 class="card-title text-center">${single.title}</h3>
+        <img src="${single.image}" class="card-img-top img-fluid" alt="...">
+        <div class="card-body">
+          <p class="text-center">Categories: ${single.category}</p>
+          <p class="card-text">${single.description}</p>
+          <hr>
+          <div class="d-flex justify-content-end">
+            <button onclick="addToCart(${single.id},${single.price})" id="addToCart-btn" class="buy-now btn btn-success"><i class="fas fa-shopping-cart"></i> Add to cart</button>
+          </div>
+        </div>
+      </div>
+      `
+      document.getElementById('single-product-details').appendChild(div);
+    });
+
+}
 
 let count = 0;
 // caling addToCart function to calculate product prices
